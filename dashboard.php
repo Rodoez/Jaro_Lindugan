@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('Asia/Manila'); // UTC+8 — matches your local time
 
 // Redirect to login if not logged in
 if (!isset($_SESSION['name'])) {
@@ -7,24 +8,27 @@ if (!isset($_SESSION['name'])) {
     exit();
 }
 
-$name        = $_SESSION['name'];
-$last_visit  = isset($_COOKIE['last_visit']) ? $_COOKIE['last_visit'] : null;
+$name = $_SESSION['name'];
+$last_visit = isset($_COOKIE['last_visit']) ? $_COOKIE['last_visit'] : null;
 
 // Update the cookie to current time for next visit
 setcookie('last_visit', date('F j, Y - h:i A'), time() + 86400, '/');
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Check-In Tracker — Dashboard</title>
-    <meta name="description" content="Your Daily Check-In Dashboard showing your current visit info and last visit history.">
+    <meta name="description"
+        content="Your Daily Check-In Dashboard showing your current visit info and last visit history.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="dashboard-body">
     <div class="page-wrapper">
         <!-- Top bar -->
@@ -83,24 +87,25 @@ setcookie('last_visit', date('F j, Y - h:i A'), time() + 86400, '/');
 
         </div>
     </div>
-<script>
-    function updateClock() {
-        const now = new Date();
-        const options = {
-            month: 'long',
-            day: 'numeric',
-            year: 'numeric',
-            hour: 'numeric',
-            minute: '2-digit',
-            hour12: true
-        };
-        document.getElementById('live-clock').textContent =
-            now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
-            + ' - '
-            + now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-    }
-    updateClock();
-    setInterval(updateClock, 1000);
-</script>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const options = {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            };
+            document.getElementById('live-clock').textContent =
+                now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+                + ' - '
+                + now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
 </body>
+
 </html>
