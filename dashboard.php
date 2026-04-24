@@ -8,7 +8,6 @@ if (!isset($_SESSION['name'])) {
 }
 
 $name        = $_SESSION['name'];
-$today       = date('F j, Y - h:i A');
 $last_visit  = isset($_COOKIE['last_visit']) ? $_COOKIE['last_visit'] : null;
 
 // Update the cookie to current time for next visit
@@ -58,7 +57,7 @@ setcookie('last_visit', date('F j, Y - h:i A'), time() + 86400, '/');
                     <div class="info-dot today-dot">🗓️</div>
                     <div>
                         <div class="info-label">Today is</div>
-                        <div class="info-value today-val"><?= $today ?></div>
+                        <div class="info-value today-val" id="live-clock">Loading...</div>
                     </div>
                 </div>
 
@@ -84,5 +83,24 @@ setcookie('last_visit', date('F j, Y - h:i A'), time() + 86400, '/');
 
         </div>
     </div>
+<script>
+    function updateClock() {
+        const now = new Date();
+        const options = {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        };
+        document.getElementById('live-clock').textContent =
+            now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+            + ' - '
+            + now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+</script>
 </body>
 </html>
