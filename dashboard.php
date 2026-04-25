@@ -1,6 +1,6 @@
 <?php
 session_start();
-date_default_timezone_set('Asia/Manila'); // UTC+8 — matches your local time
+date_default_timezone_set('Asia/Manila'); // local time
 
 // Redirect to login if not logged in
 if (!isset($_SESSION['name'])) {
